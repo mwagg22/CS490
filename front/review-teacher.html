@@ -58,16 +58,26 @@ var Pnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt
 for(var j=0;j<Pnts.length;j++){
 var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt")[j].innerHTML;
 totPnt+=parseFloat(str.substring(str.indexOf('+')));
+var num=parseFloat(str.substring(str.indexOf('+')));
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt")[j].innerHTML=num.toFixed(2);
 }
 var Cnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt");
 for(var j=0;j<Cnts.length;j++){
 var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML;
 if(str.includes('+')){
-totPnt+=parseFloat(str.substring(str.indexOf('+')));}
-else if(str.includes('-')){
-totPnt+=0;}
+totPnt+=parseFloat(str.substring(str.indexOf('+')));
+var num=parseFloat(str.substring(str.indexOf('+')));
+var words = str.split('+');
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" +"+num.toFixed(2);
 }
-document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=totPnt;
+else if(str.includes('-')){
+totPnt+=0;
+var words = str.split('-');
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" -"+num.toFixed(2);
+}
+}
+document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=Math.ceil(totPnt);
+//document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].readOnly=true;
 totPnt=0;
 }
 }
@@ -78,6 +88,7 @@ var pnts=document.getElementsByClassName("in-points");
 for(var l=0;l<pnts.length;l++){
 fnlPnts+=parseInt(pnts[l].value);
 }
+send_comment();
 if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -87,14 +98,35 @@ if (window.XMLHttpRequest) {
         }
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {								
-				var message_res=JSON.parse(this.responseText);
-				console.log(message_res);
+				console.log(this.responseText);
 				snack();
             }
 			};
         xmlhttp.open("POST","curl/submit_grade.php",true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xmlhttp.send("student_id="+localStorage.studentNum+"&quiz_num="+localStorage.quiznum+"&score="+fnlPnts+"&released=1");	
+
+}
+function send_comment(){
+var cmnts=document.getElementsByClassName("teacher-comment");
+for(var l=0;l<cmnts.length;l++){
+if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				console.log(this.responseText);
+            }
+			};
+        xmlhttp.open("POST","curl/add_comment.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("quiznum="+localStorage.quiznum+"&question_id="+cmnts[l].dataset.questid+"&student_id="+localStorage.studentNum+"&comment="+cmnts[l].value+"&teacher_cnt=1");	
+
+}
 
 }
 </script>

@@ -52,18 +52,25 @@ var Pnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt
 for(var j=0;j<Pnts.length;j++){
 var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt")[j].innerHTML;
 totPnt+=parseFloat(str.substring(str.indexOf('+')));
+var num=parseFloat(str.substring(str.indexOf('+')));
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt")[j].innerHTML=num.toFixed(2);
 }
 var Cnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt");
 for(var j=0;j<Cnts.length;j++){
 var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML;
 if(str.includes('+')){
 totPnt+=parseFloat(str.substring(str.indexOf('+')));
+var num=parseFloat(str.substring(str.indexOf('+')));
+var words = str.split('+');
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" +"+num.toFixed(2);
 }
 else if(str.includes('-')){
 totPnt+=0;
+var words = str.split('-');
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" -"+num.toFixed(2);
 }
 }
-document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=totPnt;
+document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=Math.ceil(totPnt);
 document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].readOnly=true;
 totPnt=0;
 }

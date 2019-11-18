@@ -9,7 +9,6 @@ $db = mysqli_connect('localhost', 'root', '', 'mw288');
 
   $sql = "UPDATE Available SET Taken='1' WHERE Student_ID='$id' AND Quiz_Num='$quiznum'";
   	$resultsql = mysqli_query($db, $sql);
-  echo "Answer:".$answer;
   	$query = "INSERT INTO studentanswers (Student_ID,Quiz_ID,Question_ID,Answers) VALUES ('$id','$quiznum','$question_id','$answer')";
   	$results = mysqli_query($db, $query);
   	if ($results) {

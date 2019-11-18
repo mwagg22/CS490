@@ -12,7 +12,8 @@ if($resultsQ){
 $tot=0;
 while($rowQ_T = mysqli_fetch_assoc($resultsG)){
 $tot+=$rowQ_T['Points'];
-$res="<div style='width:100%;margin-left:auto;'><div id='fgrade' style='text-align-last: end;'>Final:<input type='number' name='quantity' min='1' max='100' value=".$rowQ_T['Score']." readOnly>/".$tot."</input></div></div>";}
+$res="<div style='width:100%;margin-left:auto;'><div id='fgrade' style='text-align-last: end;'>Final:<input type='number' name='quantity' min='1' max='100' value=".$rowQ_T['Score']." readOnly>/".$tot."</input></div></div>";
+}
 while($rowQ = mysqli_fetch_array($resultsQ, MYSQLI_ASSOC)){	
 $res.="<br><div class='Q_Box'><div style='width:100%;margin-left:auto;'><div style='text-align-last: end;'><input type='number' class='in-points' name='quantity' min='1' max='100'>/".$rowQ['Points']."</div></div>";
 $res.="<h3>Question</h3>";
@@ -46,7 +47,7 @@ $queryA = "SELECT * FROM StudentAnswers WHERE Quiz_ID='$quiznum' AND Student_ID=
 $resultsA = mysqli_query($db, $queryA);
 if($resultsA){
 while($rowA = mysqli_fetch_array($resultsA, MYSQLI_ASSOC)){
-$res.="<h3>Teacher Comments</h3><div class='input-group'><textarea readonly class='teacher-comment' id='teacher-comment' style='width:100%;' rows='10' cols='150'>".$teacherComment."</textarea></div><h3>Student Answer</h3><div class='input-group'><textarea readonly id='student-answer' style='width:100%;' rows='10' cols='150'>".$rowA["Answers"]."</textarea></div></div>";	
+$res.="<h3>Teacher Comments</h3><div class='input-group'><textarea readonly class='teacher-comment' data-questid=".$quesID." id='teacher-comment' style='width:100%;' rows='10' cols='150'>".$teacherComment."</textarea></div><h3>Student Answer</h3><div class='input-group'><textarea readonly id='student-answer' style='width:100%;' rows='10' cols='150'>".$rowA["Answers"]."</textarea></div></div>";	
 }}
 }
 }

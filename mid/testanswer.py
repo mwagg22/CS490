@@ -1,14 +1,4 @@
-def operations(op,a,b):
-	if op=='+':
-		return a+b
-	elif op=='-':
-		return a-b
-	elif op=='*':
-		return a*b
-	elif op=='/':
-		return a/b
-	else:
-		return "Error"
-	
+def operation(op,a,b):
+	return error
 
-print(operations('#',10,5))
+print(operation('#',10,5))

@@ -24,13 +24,17 @@ $TestCases_Outputs=array();
   	while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)){
 		$testcase=$row['Test_Case'];
 		$points=$row['Points'];
-		$ppq=$points/(2+mysqli_num_rows($results));
+		$ppq=$points/(3+mysqli_num_rows($results));
 		//echo $ppq;
 		//echo "\n".mysqli_num_rows($results);
 		$expected_tCaseA=$row['Expected'];
 		$expected_funName=$row['Function_Name'];
 		$expected_param=$row['Parameters'];
 		$expected_constraint=$row['Constraints'];
+		if($expected_constraint!="None")
+		{
+		$ppq=$points/(4+mysqli_num_rows($results));
+		}
 		$answer_spliced=explode("\n", rawurldecode($answer));
 		$answer_funName=(substr($answer_spliced[0], strpos($answer_spliced[0], " ")+1, strpos($answer_spliced[0], "(")-strpos($answer_spliced[0], " ")-1));
 		$answer_param=(substr($answer_spliced[0], strpos($answer_spliced[0], "(")+1, strpos($answer_spliced[0], ")")-1-strpos($answer_spliced[0], "(")));
@@ -70,6 +74,15 @@ $TestCases_Outputs=array();
 		}
 		else{
 		$cnt="Right Parameter +".$ppq;
+		array_push($Comments,array($quiznum,$question_id,$id,$cnt,0));	
+		}
+		//syntax
+		if(!strpos(rawurldecode($answer),":")){
+		$cnt="Missing Colon : -".$ppq;
+		array_push($Comments,array($quiznum,$question_id,$id,$cnt,0));					
+		}
+		else{
+		$cnt="Contains Colon : +".$ppq;
 		array_push($Comments,array($quiznum,$question_id,$id,$cnt,0));	
 		}
 		//constraint

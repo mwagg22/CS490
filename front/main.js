@@ -165,8 +165,14 @@ else{
         }
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {								
-				var message_res=this.responseText;
+				var message_res=JSON.parse(this.responseText);
+				console.log(message_res);
+				if(message_res=="Question aleady exists in quiz"){
+					snackf("Question aleady exists in quiz");
+				}
+				else{
 				snack();
+				}
 			}
         };
         xmlhttp.open("POST","curl/add_quiz.php",true);
