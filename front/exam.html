@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Teacher</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="main.js"></script>
+</head>
+<body onload="loadQuiz()">
+<div id="full-screen-loader"><img id="loader-img" src="images/spin.gif"/></div>
+<div id="snackbar">Success!</div>
+<div id="snackbar-f">Failed. Try again!</div>
+<button class="tablink" style="width:100%!important;background-color:red;" onclick="return_home()" id="defaultOpen">Home</button>
+<div id="Exams" class="tabcontent" style="display:block;">
+ <div class="full-page-div">
+<div class="container">
+<h2 style="text-align:center">Exam</h2>
+<div id="response">
+
+</div>
+<button type="add" style="margin-left:90%;" onclick="submitExam()">Submit</button>
+
+</div>
+</div>
+</div>
+</body>
+</html>
+<script>
+function loadQuiz(){
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=this.responseText;
+				var json_array=JSON.parse(message_res);
+            for(i=0;i<json_array.length;i++){
+			var question=json_array[i];
+			document.getElementById("response").innerHTML+='<div class="question" data-id='+json_array[i].question_id+'><div class="half-page-div"><h3>'+(i+1)+'</h3></div><div class="half-page-div"><h3 style="margin-left:90%;">Points</h3><p style="margin-left:90%;">'+json_array[i].Points+'</p></div><p><b>Question</b>: '+json_array[i].Question+' </p><textarea class="answer" style="width:100%;height:200px;"></textarea></div>';
+               console.log(json_array[i]);
+            }
+			}
+        };
+        xmlhttp.open("POST","curl/get_exam.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("quiznum="+localStorage.quiznum);	
+	
+}
+var itr=0;
+var elements;
+function submitExam(){
+elements = document.getElementsByClassName("question");
+Create_entry_G();
+send_answer(elements[itr]);
+//window.location.href = "exams.html";
+}
+function send_answer(ansr){
+var question_id=ansr.getAttribute("data-id");
+var answer=encodeURIComponent(ansr.getElementsByClassName("answer")[0].value);
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				if(itr<elements.length){
+				itr++;
+				send_answer(elements[itr]);
+				}
+			}
+			snack();
+			//document.getElementById("full-screen-loader").style.display = "none";
+        };
+		document.getElementById("full-screen-loader").style.display = "block";
+        xmlhttp.open("POST","curl/submit_quiz.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("id="+localStorage.id+"&quiznum="+localStorage.quiznum+"&question_id="+question_id+"&answer="+answer);	
+}
+function return_home(){
+window.location.href = "student.html";
+}
+function Create_entry_G(){
+if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=JSON.parse(this.responseText);
+				console.log(message_res);
+            }
+			};
+        xmlhttp.open("POST","curl/submit_grade.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("student_id="+localStorage.studentNum+"&quiz_num="+localStorage.quiznum+"&score=0"+"&released=0");	
+
+}
+</script>

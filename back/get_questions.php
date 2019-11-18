@@ -1,6 +1,6 @@
 <?php
 // connect to the database
-$db = mysqli_connect('sql.njit.edu', 'mw288', '1k9L0X2z', 'mw288');
+$db = mysqli_connect('localhost', 'root', '', 'mw288');
 $questions = array();
 // take data
   $type = $_POST['type'];
