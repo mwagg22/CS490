@@ -144,7 +144,8 @@ var difficulty=String(document.getElementById("difficultyQ").value);
 	
 }
 
-
+var itrq=0;
+var qelements;
 function addQuestionToExam(btn){
 var question_id=btn.dataset.quesid;
 var quizNum=document.getElementById("quizNum").value;
@@ -172,6 +173,10 @@ else{
 				}
 				else{
 				snack();
+				if(itrq<qelements.length){
+				itrq++;
+				addQuestionToExam(qelements[itrq]);
+				}
 				}
 			}
         };

@@ -1,12 +1,12 @@
-def operations(op,a,b):
-	if(op=='')
-		s=
-	elif(op=='')
-		return
-	elif(op=='')
-		return
-	elif(op=='')
-		return
+def operation(op, a, b):
+  if op =='+':
+    return a+b
+  elif op=='-':
+    return a-b
+  elif op =='*':
+    return a*b
+  elif op =='/':
+    return a/b
 print(operations(s,5,2))
 
 $cmd = "python $my_file";

@@ -21,7 +21,7 @@
 <div class="container">
 <h4>Metrics</h4>
     <label for="fname">Num of quizes taken</label>
-    <p>4</p>
+    <p id="num_of_quizes">4</p>
 
     <label for="lname">Average</label>
     <p>20</p>
@@ -88,6 +88,7 @@ document.getElementById("response").innerHTML='';
             if (this.readyState == 4 && this.status == 200) {								
 				var message_res=this.responseText;
 				var json_array=JSON.parse(message_res);
+				document.getElementById("num_of_quizes").innerHTML=json_array.length;
             for(i=0;i<json_array.length;i++){
 			var question=json_array[i];
 			document.getElementById("response").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-quizid="'+json_array[i].quiznum+'" onclick="addQuiztoStorage(this,\'R\')"><img src="images/quiz.png"/><h4 class="quiz-id">Quiz '+json_array[i].quiznum+'</h4></a></div>';
@@ -114,6 +115,7 @@ document.getElementById("response-available").innerHTML='';
             if (this.readyState == 4 && this.status == 200) {								
 				var message_res=this.responseText;
 				var json_array=JSON.parse(message_res);
+				document.getElementById("num_of_quizes").innerHTML=json_array.length;
             for(i=0;i<json_array.length;i++){
 			var question=json_array[i];
 			document.getElementById("response-available").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-quizid="'+json_array[i].quiznum+'" onclick="addQuiztoStorage(this,\'A\')"><img src="images/quiz.png"/><h4 class="quiz-id">Quiz '+json_array[i].quiznum+'</h4></a></div>';

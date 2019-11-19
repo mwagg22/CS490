@@ -25,10 +25,10 @@
 <div class="container">
 <h4>Metrics</h4>
     <label for="fname">Num of quizes</label>
-    <p>4</p>
+    <p id="num_of_quizes">4</p>
 
     <label for="lname"># of questions</label>
-    <p>20</p>
+    <p id="num_of_questions">20</p>
 </div>
 </div>
 </div>
@@ -198,6 +198,7 @@ function loadQuizes(){
             if (this.readyState == 4 && this.status == 200) {								
 				var message_res=this.responseText;
 				var json_array=JSON.parse(message_res);
+				document.getElementById("num_of_quizes").innerHTML=json_array.length;
             for(i=0;i<json_array.length;i++){
 			var question=json_array[i];
 			document.getElementById("quiz-response").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-quizid="'+json_array[i].quizNum+'" onclick="addQuiztoStorage(this)"><img src="images/quiz.png"/><h4 class="quiz-id">Quiz '+json_array[i].quizNum+'</h4></a></div>';
@@ -224,9 +225,10 @@ document.getElementById("q-list").innerHTML+='<div class="q-item" data-quesid="'
 }
 function create_quiz(){
 var items=document.getElementsByClassName("q-item");
-for(var i=0;i<items.length;i++){
-addQuestionToExam(items[i]);
-}
+qelements=items;
+//for(var i=0;i<items.length;i++){
+addQuestionToExam(qelements[0]);
+//}
 }
 function delete_question(dques){
 			if (window.XMLHttpRequest) {

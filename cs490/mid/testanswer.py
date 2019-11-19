@@ -1,4 +1,13 @@
-def add(a,b):
-	return a+b
+def operation(op, a, b):
+	  if op =='+':
+		    return a+b
+	  elif op=='-':
+		    return a-b
+	  elif op =='*':
+		    return a*b
+	  elif op =='/':
+		    return a/b
+	  else:
+		    return 'Error'
 
-print(add(3,3))
+print(operation('#',10,5))
