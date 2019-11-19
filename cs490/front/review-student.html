@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Teacher</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="main.js"></script>
+</head>
+<body onload="loadTaken()">
+<button class="tablink" style="width:100%!important;background-color:red;" onclick="return_home()" id="defaultOpen">Home</button>
+<div id="Review" class="tabcontent" style="display:block;">
+ <div class="full-page-div">
+<div class="container">
+<h2 style="text-align:center">Review</h2>
+<div id="results">
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+<script>
+function return_home(){
+window.location.href = "student.html";
+}
+function loadTaken(){
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=JSON.parse(this.responseText);
+				console.log(message_res);
+			document.getElementById("results").innerHTML+=message_res;
+			calc_question();
+            }
+			};
+        xmlhttp.open("POST","curl/get_review.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("quiznum="+localStorage.quiznum+"&studentid="+localStorage.id);	
+	
+}
+
+function calc_question(){
+var totPnt=0;
+var QBox=document.getElementsByClassName("Q_Box");
+for(var i=0;i<QBox.length;i++){
+var Pnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt");
+for(var j=0;j<Pnts.length;j++){
+var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt")[j].innerHTML;
+totPnt+=parseFloat(str.substring(str.indexOf('+')));
+var num=parseFloat(str.substring(str.indexOf('+')));
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt")[j].innerHTML=num.toFixed(2);
+}
+var Cnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt");
+for(var j=0;j<Cnts.length;j++){
+var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML;
+if(str.includes('+')){
+totPnt+=parseFloat(str.substring(str.indexOf('+')));
+var num=parseFloat(str.substring(str.indexOf('+')));
+var words = str.split('+');
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" +"+num.toFixed(2);
+}
+else if(str.includes('-')){
+totPnt+=0;
+var words = str.split('-');
+var num=parseFloat(str.substring(str.indexOf('-')));
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" -"+num.toFixed(2);
+}
+}
+document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=Math.ceil(totPnt.toFixed(2));
+document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].readOnly=true;
+totPnt=0;
+}
+}
+
+
+</script>

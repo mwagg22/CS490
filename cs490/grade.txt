@@ -1,0 +1,33 @@
+def operations(op,a,b):
+	if(op=='')
+		s=
+	elif(op=='')
+		return
+	elif(op=='')
+		return
+	elif(op=='')
+		return
+print(operations(s,5,2))
+
+$cmd = "python $my_file";
+        $output = exec($cmd);
+
+def map(a,b):\n     return a b\n
+<input type="number" name="quantity" min="1" max="100">
+
+var totPnt;
+document.getElementsByClassName("Q_Box")
+document.getElementsByClassName("Q_Box")[0].getElementsByClassName("pnt")
+document.getElementsByClassName("Q_Box")[0].getElementsByClassName("pnt").innerText
+document.getElementsByClassName("Q_Box")[0].getElementsByClassName("cnt")
+document.getElementsByClassName("Q_Box")[0].getElementsByClassName("cnt")[0].innerText
+  var str = document.getElementsByClassName("Q_Box")[0].getElementsByClassName("cnt")[0].innerText;
+if(str.includes('+')){
+totPnt+=parseInt(str.substring(str.indexOf('+')));}
+else if(str.includes('-')){
+totPnt+=parseInt(str.substring(str.indexOf('-')));}
+document.getElementsByClassName("Q_Box")[0].getElementsByTagName("input")[0].value=toPnt;
+//questions
+Create a function called operation that takes in an operation called op and two other inputs a and b and process it, returning the value of said operation. If invalid, the function should return 'Error'.
+Create a function called operation that takes in 3 inputs. op is the operation to be preformed '+' for example. a and b are the inputs to be operated on. If invalid op input return 'Error'.
+'',10,5

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<div class="login-box">
+  <div class="login-header">
+  	<h2>Login</h2>
+  </div>
+	 
+  	<div class="input-group">
+  		<label>Username:</label>
+  		<input class="input-bar" type="username" id="username" name="username" >
+  	</div>
+  	<div class="input-group">
+  		<label>Password:</label>
+  		<input class="input-bar" type="password" id="password" name="password">
+  	</div>
+  	<div class="input-group">
+  		<button type="submit" class="button-submit" name="login_user" onclick="sendLoginInfo()">Login</button>
+  	</div>
+</div>
+</body>
+</html>
+<script>
+function sendLoginInfo(){
+var username=String(document.getElementById("username").value);
+var password=String(document.getElementById("password").value);
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=this.responseText;
+				var res=JSON.parse(message_res);
+				localStorage.id=res.id;
+				if(res.type=="teacher"){
+				console.log("teacher");				
+				window.location.href = "teacher.html";
+				}
+				if(res.type=="student"){
+				console.log("student");				
+				window.location.href = "student.html";
+				}
+            }
+        };
+        xmlhttp.open("POST","curl/login_user.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("username="+username+"&password="+password);	
+	
+}
+</script>

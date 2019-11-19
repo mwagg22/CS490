@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Teacher</title>
+</head>
+  <div class="header">
+  	<h2>Available Exams</h2>
+  </div>
+<body onload="loadTakenExams()">
+	  	<p id="response">
+		None :(
+		</p>
+</body>
+</html>
+<script>
+function loadTakenExams(){
+document.getElementById("response").innerHTML='';
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=this.responseText;
+				var json_array=JSON.parse(message_res);
+            for(i=0;i<json_array.length;i++){
+			var question=json_array[i];
+			document.getElementById("response").innerHTML+='<div id="question">Quiz:'+json_array[i].quiznum+' Available<br><button data-id="'+json_array[i].quiznum+'" onclick="addQuiztoStorage(this)">Take Exam</button></div>';
+               console.log(json_array[i]);
+            }
+			}
+        };
+        xmlhttp.open("POST","curl/check_taken.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("id="+localStorage.id);	
+	
+}
+function addQuiztoStorage(btn){
+var quizNum=btn.getAttribute("data-id");
+localStorage.quiznum=quizNum;
+window.location.href = "review.html";
+}
+function calc_question(){
+var totPnt=0;
+var QBox=document.getElementsByClassName("Q_Box");
+for(var i=0;i<QBox.length;i++){
+var Pnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt");
+for(var j=0;j<Pnts.length;j++){
+var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("pnt")[j].innerHTML;
+totPnt+=parseInt(str.substring(str.indexOf('+')));
+}
+var Cnts=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt");
+for(var j=0;j<Cnts.length;j++){
+var str=document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML;
+if(str.includes('+')){
+totPnt+=parseInt(str.substring(str.indexOf('+')));}
+else if(str.includes('-')){
+totPnt+=parseInt(str.substring(str.indexOf('-')));}
+}
+document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=toPnt;
+totPnt=0;
+}
+}
+</script>

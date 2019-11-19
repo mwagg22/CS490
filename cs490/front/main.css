@@ -1,0 +1,261 @@
+/*  Login */
+.login-box{
+    padding: 5%;
+    background-color: red;
+    /* bottom: 20vh; */
+    width: min-content;
+    margin: auto;
+    margin-top: 20vh;	
+	border-radius:25px;
+}
+.login-header{
+    text-decoration: underline;
+    /* align-content: center; */
+    text-align-last: center;
+}
+.input-group{
+	font-family:cursive;
+}
+.input-bar{
+	border:none;
+}
+.button-submit{
+	border:none;
+    border-radius: 5px;
+    font-family: cursive;
+    margin-top: 20px;
+	width:100%;
+}
+.full-page-div{
+	width:100%;
+	height:100%;
+}
+.threequater-page-div{
+	width: 65%;
+    height: 100%;
+    display: inline-table;
+	margin: auto;
+}
+.half-page-div{
+	width: 49%;
+    height: 100%;
+    display: inline-table;
+	margin: auto;
+}
+.quater-page-div{
+	width: 25%;
+    height: 100%;
+    display: inline-table;
+	margin: auto;
+}
+.quiz-id{
+text-align:center;
+}
+.quiz-img-container{
+	display: inline-block;
+	margin:15px;
+}
+.question{
+	padding: 14px;
+    border-top: groove;
+	
+}
+.q-item{
+	display:inline-flex;
+	width:100%;
+}
+/* Teacher Tab */
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: cursive;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 33.33%;
+   transition: 0.7s;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+/**/
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.half-input{
+width: 49%!important;
+display:inline-flex!important;	
+	
+}
+.quat-input{
+width: 25%!important;
+display:inline-flex!important;	
+	
+}
+#Logout_Btn{
+	position: fixed;
+    bottom: 10%;
+    right: 10%;
+    background-color: red;
+    width: 100px;
+    height: 100px;
+}
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+button[type=add] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type=add]:hover {
+  background-color: #45a049;
+}
+div.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+/*tables*/
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+th{
+  background-color: black;
+  color:white;	
+}
+td{
+  background-color: white;
+  color:black;	
+}
+td:hover{
+  background-color: gray;
+}
+#full-screen-loader{
+display:none;
+width:100%;
+height:100%;
+    background-color: #3535358a;
+    z-index: 10;
+    position: fixed;
+text-align:center;	
+}
+#loader-img{
+margin-top:19%;		
+}
+/*snackbar*/
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #4CAF50;
+  color: #fff;
+  text-align: center;
+  border-radius: 20px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+#snackbar-f {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: red;
+  color: #fff;
+  text-align: center;
+  border-radius: 20px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 30px;
+  font-size: 17px;
+}
+
+#snackbar-f.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+@-webkit-keyframes fadein {
+  from {top[: 0; opacity: 0;} 
+  to {top: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {top: 30px; opacity: 1;} 
+  to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 30px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+

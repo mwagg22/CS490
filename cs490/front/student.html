@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Teacher</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="main.js"></script>
+</head>
+<body onload="loaded()">
+<button class="tablink" style="width:50%;" onclick="openPage('Home', this, 'red')" id="defaultOpen">Home</button>
+<button class="tablink" style="width:50%;" onclick="openPage('Quizes', this, 'red')">Available Quizes</button>
+
+<div id="Home" class="tabcontent">
+ <div class="threequater-page-div">
+<div class="container">
+<h2 style="text-align:center">Quizes<h2>
+<div id="response">
+</div>
+</div>
+</div>
+ <div class="quater-page-div">
+<div class="container">
+<h4>Metrics</h4>
+    <label for="fname">Num of quizes taken</label>
+    <p>4</p>
+
+    <label for="lname">Average</label>
+    <p>20</p>
+</div>
+</div>
+</div>
+
+<div id="Quizes" class="tabcontent">
+ <div class="half-page-div">
+<div class="container">
+<h2 style="text-align:center;">Available Quizes</h2>
+<div id="response-available">
+  <h3>No New Quizes</h3>
+</div>
+ </div>
+  </div>
+</div>
+<a href="javascript:;">
+<div id="Logout_Btn" onclick="Logout()">
+<img style="width:50%;height:50%;margin:25%;"src="images/logout.png"/>
+</div>
+</a>
+</body>
+</html>
+<script>
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "flex";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+function addQuiztoStorage(btn,flag){
+var quizNum=btn.getAttribute("data-quizid");
+localStorage.quiznum=quizNum;
+if(flag=="R"){
+window.location.href = "review-student.html";
+}
+else if(flag=="A"){
+window.location.href = "exam.html";
+}
+}
+
+function loadTakenExams(){
+document.getElementById("response").innerHTML='';
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=this.responseText;
+				var json_array=JSON.parse(message_res);
+            for(i=0;i<json_array.length;i++){
+			var question=json_array[i];
+			document.getElementById("response").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-quizid="'+json_array[i].quiznum+'" onclick="addQuiztoStorage(this,\'R\')"><img src="images/quiz.png"/><h4 class="quiz-id">Quiz '+json_array[i].quiznum+'</h4></a></div>';
+               console.log(json_array[i]);
+            }
+			}
+        };
+        xmlhttp.open("POST","curl/check_taken.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("id="+localStorage.id);	
+	
+}
+
+function loadAvailableExams(){
+document.getElementById("response-available").innerHTML='';
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=this.responseText;
+				var json_array=JSON.parse(message_res);
+            for(i=0;i<json_array.length;i++){
+			var question=json_array[i];
+			document.getElementById("response-available").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-quizid="'+json_array[i].quiznum+'" onclick="addQuiztoStorage(this,\'A\')"><img src="images/quiz.png"/><h4 class="quiz-id">Quiz '+json_array[i].quiznum+'</h4></a></div>';
+               console.log(json_array[i]);
+            }
+			}
+        };
+        xmlhttp.open("POST","curl/check_available.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("id="+localStorage.id);	
+	
+}
+function loaded(){
+loadAvailableExams();
+loadTakenExams();
+}
+</script>

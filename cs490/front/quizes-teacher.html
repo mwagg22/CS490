@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Teacher</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="main.js"></script>
+</head>
+<body onload="loadStudentInfo()">
+<button class="tablink" style="width:100%!important;background-color:red;" onclick="return_home()" id="defaultOpen">Home</button>
+<div id="Home" class="tabcontent" style="display:block;">
+ <div class="full-page-div">
+<div class="container">
+<h2 style="text-align:center">Students</h2>
+<div id="students">
+
+<div class="quiz-img-container">
+<a href="javascript:;" data-studentid="5" onclick="addStudenttoStorage(this)">
+<img src="images/quiz.png"/>
+<h4 class="quiz-id">Jane</h4>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+<script>
+function return_home(){
+window.location.href = "teacher.html";
+}
+
+function loadStudentInfo(){
+document.getElementById("students").innerHTML='';
+	         if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=this.responseText;
+				var json_array=JSON.parse(message_res);
+            for(i=0;i<json_array.length;i++){
+			var question=json_array[i];
+			document.getElementById("students").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-studentid='+json_array[i].studentID+' onclick="addStudenttoStorage(this)"><img src="images/quiz.png"/><h4 class="quiz-id">'+json_array[i].studentName+'</h4></a></div>';
+               console.log(json_array[i]);
+            }
+			}
+        };
+        xmlhttp.open("POST","curl/check_taken.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("quiznum="+localStorage.quiznum+"&isteacher=true");	
+	
+}
+
+function addStudenttoStorage(btn){
+var studentNum=btn.getAttribute("data-studentid");
+localStorage.studentNum=studentNum;
+window.location.href = "review-teacher.html";
+}
+
+</script>

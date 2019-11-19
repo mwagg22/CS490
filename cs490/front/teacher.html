@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Teacher</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="main.js"></script>
+</head>
+<body onload="load()">
+<div id="full-screen-loader"><img id="loader-img" src="images/spin.gif"/></div>
+<div id="snackbar">Success!</div>
+<div id="snackbar-f">Try again!</div>
+<button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">Home</button>
+<button class="tablink" onclick="openPage('Question_Bank', this, 'red')">Question</button>
+<button class="tablink" onclick="openPage('Create_Quiz', this, 'red')">Create Quiz</button>
+<div id="Home" class="tabcontent">
+ <div class="threequater-page-div">
+<div class="container">
+ <h2 style="text-align:center">Quizes</h2>
+ <div id="quiz-response">
+
+</div>
+</div>
+</div>
+ <div class="quater-page-div">
+<div class="container">
+<h4>Metrics</h4>
+    <label for="fname">Num of quizes</label>
+    <p>4</p>
+
+    <label for="lname"># of questions</label>
+    <p>20</p>
+</div>
+</div>
+</div>
+
+<div id="Question_Bank" class="tabcontent">
+ <div class="half-page-div">
+<div class="container">
+<h2>Add Question</h2>
+  <h3>Question</h3>
+  	<div class="input-group">
+	<textarea id="question" style="width:100%;" rows="4" cols="50" value=""></textarea>
+  	</div>
+	<h4>Function Name</h4>
+	<div class="input-group">
+	<input type="text" id="function_name" name="function_name" placeholder="" >
+  	</div>
+	<h4>Parameters</h4>
+	<div class="input-group">
+	<input type="text" id="parameters" name="parameters" placeholder="inputs for function" >
+  	</div>
+	<h4>Test Cases</h4>
+	<div class="input-group">
+	<div id="create_testcases">
+	<input class="quat-input" type="text" id="insert_testcases" name="parameters" placeholder="Number of cases" >
+	<button type="add" style="margin:auto;" onclick="create_testcases()">Add</button>
+	</div>
+	<div id="test_cases">
+  	</div>
+	</div>
+  <div class="header">
+  	<h4>Type</h4>
+  </div>	
+<select id="type">
+  <option value="Arithmetic">Arithmetic</option>
+  <option value="List">List</option>
+  <option value="Logic">Logic</option>
+  <option value="Sort">Sort</option>
+  <option value="String">String</option>
+</select>
+  <div class="header">
+  	<h4>Difficulty</h4>
+  </div>	
+<select id="difficulty">
+  <option value="Easy">Easy</option>
+  <option value="Normal">Normal</option>
+  <option value="Hard">Hard</option>
+</select>
+
+  	<div class="input-group" id="submit">
+	
+  		<input type="submit" class="btn" name="create_question" onclick="addQuestion()"></input>
+</div>
+  </div>
+  </div>
+  <div class="half-page-div">
+<div class="container">
+<h2 style="text-align:center">Question Bank</h2>
+<h3>Select Category</h3>
+<h4>Type</h2>
+<select id="typeQ" onchange="loadQuestionBank()">
+  <option value="Arithmetic">Arithmetic</option>
+  <option value="List">List</option>
+  <option value="Logic">Logic</option>
+  <option value="Sort">Sort</option>
+  <option value="String">String</option>
+</select>
+<h4>Difficulty</h2>
+<select id="difficultyQ" onchange="loadQuestionBank()">
+  <option value="Easy">Easy</option>
+  <option value="Normal">Normal</option>
+  <option value="Hard">Hard</option>
+</select>
+<div class="response" id="QuestionBankResponse">
+</div>
+</div>
+</div>
+</div>
+
+<div id="Create_Quiz" class="tabcontent">
+  <div class="half-page-div">
+<div class="container">
+  	<div class="input-group">
+  		<label>Insert Quiz Number</label>
+  		<input type="text" id="quizNum" name="quizNum" >
+  	</div>
+	  	<div class="input-group">
+		<br>
+<div id="q-list">
+</div>
+<button type="add" style="margin:auto;" onclick="create_quiz()">Create Quiz</button>
+  	</div>
+</div>
+  </div>
+  <div class="half-page-div">
+<div class="container">
+<h2 style="text-align:center">Question Bank</h2>
+<h3>Select Category</h3>
+<h4>Type</h2>
+<select id="typeE" onchange="loadQuestionBank_e()">
+  <option value="Arithmetic">Arithmetic</option>
+  <option value="List">List</option>
+  <option value="Logic">Logic</option>
+  <option value="Sort">Sort</option>
+  <option value="String">String</option>
+</select>
+<h4>Difficulty</h2>
+<select id="difficultyE" onchange="loadQuestionBank_e()">
+  <option value="Easy">Easy</option>
+  <option value="Normal">Normal</option>
+  <option value="Hard">Hard</option>
+</select>
+<div id="QuestionBankResponse_E">
+</div>
+</div>
+</div>
+</div>
+<a href="javascript:;">
+<div id="Logout_Btn" onclick="Logout()">
+<img style="width:50%;height:50%;margin:25%;"src="images/logout.png"/>
+</div>
+</a>
+</body>
+</html>
+<script>
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "flex";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+function addQuiztoStorage(btn){
+var quizNum=btn.getAttribute("data-quizid");
+localStorage.quiznum=quizNum;
+window.location.href = "quizes-teacher.html";
+}
+
+function create_testcases(){
+testC=document.getElementById("test_cases");
+testC.innerHTML="";
+testNum=document.getElementById("insert_testcases").value;
+for(i=0;i<testNum;i++){
+testC.innerHTML+='<div class="test-cases" id="test-cases"><input class="half-input testcase" type="text" id="parameters" name="parameters" placeholder="Test Case(function parameter)" ><input class="half-input testcaseanswer" type="text" id="parameters_answer" name="parameters" placeholder="Answer" ></div>';
+}
+}
+
+function loadQuizes(){
+		document.getElementById("quiz-response").innerHTML='';
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+			if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=this.responseText;
+				var json_array=JSON.parse(message_res);
+            for(i=0;i<json_array.length;i++){
+			var question=json_array[i];
+			document.getElementById("quiz-response").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-quizid="'+json_array[i].quizNum+'" onclick="addQuiztoStorage(this)"><img src="images/quiz.png"/><h4 class="quiz-id">Quiz '+json_array[i].quizNum+'</h4></a></div>';
+               console.log(json_array[i]);			   
+            }
+			}
+        };
+        xmlhttp.open("POST","curl/get_quizes.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send();	
+}
+
+function load(){
+loadQuizes();
+loadQuestionBank_e();
+loadQuestionBank();
+}
+
+function delete_q_from_exam(item){
+item.parentNode.remove();
+}
+function add_q_to_list(itm){
+document.getElementById("q-list").innerHTML+='<div class="q-item" data-quesid="'+itm.dataset.id+'"><button type="add" style="margin:auto;" onclick="delete_q_from_exam(this)">Delete</button><p style="padding:10px;">'+itm.previousSibling.innerHTML+'</p><div id="q-constraints" style="margin:auto;padding:10px;"><select id="constraints" style="width:inherit;margin:auto;"><option value="None">None</option><option value="for">For</option><option value="if">If</option><option value="while">While</option><option value="print">Print</option></select></div><div id="q-points" style="margin:auto;"><input type="text" style="width:80px;margin:auto;" id="points" name="points"></div></div>';
+}
+function create_quiz(){
+var items=document.getElementsByClassName("q-item");
+for(var i=0;i<items.length;i++){
+addQuestionToExam(items[i]);
+}
+}
+function delete_question(dques){
+			if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=JSON.parse(this.responseText);
+				console.log(message_res);
+				if(message_res=="Removed Question"){
+				snack();
+				loadQuestionBank_e();
+				loadQuestionBank();
+				}
+				else{
+				snackf("Error Occured");
+				}
+			}
+        };
+        xmlhttp.open("POST","curl/delete_question.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("question_id="+dques.dataset.id);	
+}
+</script>
