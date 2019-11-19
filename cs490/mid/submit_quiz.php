@@ -109,16 +109,21 @@ $TestCases_Outputs=array();
 	}
 //insert comments
 	  foreach ($Comments as $row) {
-        $Val1 = $row[0];
+		 $Val1 = $row[0];
         $Val2 = $row[1];
         $Val3 = $row[2];
-		$Val4 = $row[3];
+		$Val4 = rawurlencode($row[3]);
         $Val5 = $row[4];
-        $queryC ="INSERT INTO Comments (Quiz_ID,Question_ID,Student_ID,Comment,TeacherComment) VALUES ('$Val1','$Val2','$Val3','$Val4','$Val5')";
-        $resultsC=mysqli_query($db, $queryC);
-			if($resultsC){
-	echo "Successful add comment\n";
-	}
+		$ch = curl_init();
+  
+  curl_setopt($ch, CURLOPT_URL, "http://localhost/cs490/back/add_comment.php");
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, "quiznum=$Val1&question_id=$Val2&student_id=$Val3&comment=$Val4&teacher_cnt=$Val5");
+
+  $result = curl_exec($ch);
+  
+  
+  curl_close($ch);
     }
 	//insert testcase output
 	foreach ($TestCases_Outputs as $row) {
@@ -128,10 +133,12 @@ $TestCases_Outputs=array();
 		$Val4 = $row[3];
         $Val5 = $row[4];
 		$Val6 = $row[5];
-$queryO = "INSERT INTO Output (Quiz_ID,Student_ID,Question_ID,Expected,Output,Points) VALUES ('$Val1','$Val2','$Val3','$Val4','$Val5','$Val6')";
-  	$resultsO = mysqli_query($db, $queryO);
-	if($resultsO){
-	echo "Successful add outputs\n";
-	}
+		$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "http://localhost/cs490/back/add_output.php");
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, "quiz_id=$Val1&student_id=$Val2&question_id=$Val3&expected=$Val4&output=$Val5&points=$Val6");
+
+  $result = curl_exec($ch); 
+  curl_close($ch);
 }		
 ?>
