@@ -104,7 +104,7 @@ var difficulty=String(document.getElementById("difficultyE").value);
 				var json_array=JSON.parse(message_res);
             for(i=0;i<json_array.length;i++){
 			var question=json_array[i];
-			document.getElementById("QuestionBankResponse_E").innerHTML+='<div class="question" style="display: inline-flex;width:100%;"><p>Question: '+json_array[i].Question+'</p><button type="add" data-id="'+json_array[i].ID+'" onclick="addQuestionToExam(this)" style="margin-left: auto;margin-top: auto;margin-bottom: auto;">Add</button></div>';
+			document.getElementById("QuestionBankResponse_E").innerHTML+='<div class="question" style="display: inline-flex;width:100%;"><p>Question: '+json_array[i].Question+'</p><button type="add" data-id="'+json_array[i].ID+'" onclick="add_q_to_list(this)" style="margin-left: auto;margin-top: auto;margin-bottom: auto;">Add</button></div>';
 			console.log(json_array[i]);
             }
 			}
@@ -132,7 +132,7 @@ var difficulty=String(document.getElementById("difficultyQ").value);
 				var json_array=JSON.parse(message_res);
             for(i=0;i<json_array.length;i++){
 			var question=json_array[i];
-			document.getElementById("QuestionBankResponse").innerHTML+='<div class="question"><p>Question: '+json_array[i].Question+'</p></div>';
+			document.getElementById("QuestionBankResponse").innerHTML+='<div class="question" style="width:100%;display:inline-flex;"><p>Question: '+json_array[i].Question+'</p><button type="add" data-id="'+json_array[i].ID+'" style="margin-left:auto;margin-top:auto;margin-bottom:auto;" onclick="delete_question(this)">Delete</button></div>';
                console.log(json_array[i]);
 			   
             }
@@ -144,12 +144,13 @@ var difficulty=String(document.getElementById("difficultyQ").value);
 	
 }
 
-
+var itrq=0;
+var qelements;
 function addQuestionToExam(btn){
-var question_id=btn.getAttribute("data-id");
+var question_id=btn.dataset.quesid;
 var quizNum=document.getElementById("quizNum").value;
-var points=document.getElementById("points").value;
-var constraint=document.getElementById("constraints").value;
+var points=btn.getElementsByTagName("div")[1].childNodes[0].value;
+var constraint=btn.getElementsByTagName("div")[0].childNodes[0].value;
 if(points==""||quizNum==""){
 	//snack
 snackf('Please fill in points/quiz number');
@@ -172,6 +173,10 @@ else{
 				}
 				else{
 				snack();
+				if(itrq<qelements.length){
+				itrq++;
+				addQuestionToExam(qelements[itrq]);
+				}
 				}
 			}
         };

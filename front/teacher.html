@@ -25,10 +25,10 @@
 <div class="container">
 <h4>Metrics</h4>
     <label for="fname">Num of quizes</label>
-    <p>4</p>
+    <p id="num_of_quizes"></p>
 
     <label for="lname"># of questions</label>
-    <p>20</p>
+    <p id="num_of_questions">30</p>
 </div>
 </div>
 </div>
@@ -62,10 +62,10 @@
   	<h4>Type</h4>
   </div>	
 <select id="type">
-  <option value="Map">Map</option>
-  <option value="Sort">Sort</option>
   <option value="Arithmetic">Arithmetic</option>
-  <option value="Dictionary">Dictionary</option>
+  <option value="List">List</option>
+  <option value="Logic">Logic</option>
+  <option value="Sort">Sort</option>
   <option value="String">String</option>
 </select>
   <div class="header">
@@ -89,10 +89,10 @@
 <h3>Select Category</h3>
 <h4>Type</h2>
 <select id="typeQ" onchange="loadQuestionBank()">
-  <option value="Map">Map</option>
-  <option value="Sort">Sort</option>
   <option value="Arithmetic">Arithmetic</option>
-  <option value="Dictionary">Dictionary</option>
+  <option value="List">List</option>
+  <option value="Logic">Logic</option>
+  <option value="Sort">Sort</option>
   <option value="String">String</option>
 </select>
 <h4>Difficulty</h2>
@@ -115,16 +115,10 @@
   		<input type="text" id="quizNum" name="quizNum" >
   	</div>
 	  	<div class="input-group">
-		<label>Points for question</label>
-  		<input type="text" id="points" name="points" >
-		<h4>Constraints</h2>
-<select id="constraints">
-  <option value="None">None</option>
-  <option value="for">For</option>
-  <option value="if">If</option>
-  <option value="while">While</option>
-  <option value="print">Print</option>
-</select>
+		<br>
+<div id="q-list">
+</div>
+<button type="add" style="margin:auto;" onclick="create_quiz()">Create Quiz</button>
   	</div>
 </div>
   </div>
@@ -134,10 +128,10 @@
 <h3>Select Category</h3>
 <h4>Type</h2>
 <select id="typeE" onchange="loadQuestionBank_e()">
-  <option value="Map">Map</option>
-  <option value="Sort">Sort</option>
   <option value="Arithmetic">Arithmetic</option>
-  <option value="Dictionary">Dictionary</option>
+  <option value="List">List</option>
+  <option value="Logic">Logic</option>
+  <option value="Sort">Sort</option>
   <option value="String">String</option>
 </select>
 <h4>Difficulty</h2>
@@ -204,6 +198,7 @@ function loadQuizes(){
             if (this.readyState == 4 && this.status == 200) {								
 				var message_res=this.responseText;
 				var json_array=JSON.parse(message_res);
+				document.getElementById("num_of_quizes").innerHTML=json_array.length;
             for(i=0;i<json_array.length;i++){
 			var question=json_array[i];
 			document.getElementById("quiz-response").innerHTML+='<div class="quiz-img-container"><a href="javascript:;" data-quizid="'+json_array[i].quizNum+'" onclick="addQuiztoStorage(this)"><img src="images/quiz.png"/><h4 class="quiz-id">Quiz '+json_array[i].quizNum+'</h4></a></div>';
@@ -220,5 +215,44 @@ function load(){
 loadQuizes();
 loadQuestionBank_e();
 loadQuestionBank();
+}
+
+function delete_q_from_exam(item){
+item.parentNode.remove();
+}
+function add_q_to_list(itm){
+document.getElementById("q-list").innerHTML+='<div class="q-item" data-quesid="'+itm.dataset.id+'"><button type="add" style="margin:auto;" onclick="delete_q_from_exam(this)">Delete</button><p style="padding:10px;">'+itm.previousSibling.innerHTML+'</p><div id="q-constraints" style="margin:auto;padding:10px;"><select id="constraints" style="width:inherit;margin:auto;"><option value="None">None</option><option value="for">For</option><option value="if">If</option><option value="while">While</option><option value="print">Print</option></select></div><div id="q-points" style="margin:auto;"><input type="text" style="width:80px;margin:auto;" id="points" name="points"></div></div>';
+}
+function create_quiz(){
+var items=document.getElementsByClassName("q-item");
+qelements=items;
+//for(var i=0;i<items.length;i++){
+addQuestionToExam(qelements[0]);
+//}
+}
+function delete_question(dques){
+			if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {								
+				var message_res=JSON.parse(this.responseText);
+				console.log(message_res);
+				if(message_res=="Removed Question"){
+				snack();
+				loadQuestionBank_e();
+				loadQuestionBank();
+				}
+				else{
+				snackf("Error Occured");
+				}
+			}
+        };
+        xmlhttp.open("POST","curl/delete_question.php",true);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("question_id="+dques.dataset.id);	
 }
 </script>

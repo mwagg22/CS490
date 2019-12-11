@@ -6,7 +6,7 @@
 
   $ch = curl_init();
   
-  curl_setopt($ch, CURLOPT_URL, "http://localhost/cs490/mid/submit_grade.php");
+  curl_setopt($ch, CURLOPT_URL, "http://afsaccess2.njit.edu/~mw288/cs490/mid/submit_grade.php");
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, "student_id=$student_id&quiz_num=$quiz_num&score=$score&released=$released");
 

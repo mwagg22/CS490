@@ -7,7 +7,7 @@
     
   $ch = curl_init();
   
-  curl_setopt($ch, CURLOPT_URL, "http://localhost/cs490/back/add_quiz.php");
+  curl_setopt($ch, CURLOPT_URL, "http://afsaccess2.njit.edu/~mw288/cs490/back/add_quiz.php");
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, "quiznum=$quiznum&question_id=$question_id&points=$points&constraint=$constraint");
 

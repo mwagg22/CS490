@@ -73,10 +73,11 @@ document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].inn
 else if(str.includes('-')){
 totPnt+=0;
 var words = str.split('-');
-document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" -"+num.toFixed(2);
+var num=parseFloat(str.substring(str.indexOf('-')));
+document.getElementsByClassName("Q_Box")[i].getElementsByClassName("cnt")[j].innerHTML=words[0]+" "+num.toFixed(2);
 }
 }
-document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=Math.ceil(totPnt);
+document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].value=Math.ceil(totPnt.toFixed(2));
 //document.getElementsByClassName("Q_Box")[i].getElementsByTagName("input")[0].readOnly=true;
 totPnt=0;
 }

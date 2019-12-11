@@ -1,5 +1,5 @@
 <?php
-$db = mysqli_connect('localhost', 'root', '', 'mw288');
+$db = mysqli_connect('sql.njit.edu', 'mw288', '1k9L0X2z', 'mw288');
 $teacherComment="";
 $res="";
 $studentid=	$_POST['studentid'];
@@ -43,7 +43,7 @@ $res.="<tr><td class='cnt' colspan='3'>".$row2["Comment"]."</td></tr>";
 $res.="</table>";
 
 //q3 student answer
-$queryA = "SELECT * FROM StudentAnswers WHERE Quiz_ID='$quiznum' AND Student_ID='$studentid' AND Question_ID='$quesID'";
+$queryA = "SELECT * FROM Studentanswers WHERE Quiz_ID='$quiznum' AND Student_ID='$studentid' AND Question_ID='$quesID'";
 $resultsA = mysqli_query($db, $queryA);
 if($resultsA){
 while($rowA = mysqli_fetch_array($resultsA, MYSQLI_ASSOC)){

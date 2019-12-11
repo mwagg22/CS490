@@ -5,7 +5,7 @@
    $isteacher = $_POST['isteacher'];
   
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "http://localhost/cs490/back/check_taken.php");
+  curl_setopt($ch, CURLOPT_URL, "http://afsaccess2.njit.edu/~mw288/cs490/back/check_taken.php");
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, "quiznum=$quiznum&isteacher=$isteacher");
 
@@ -18,7 +18,7 @@
    $id = $_POST['id'];
 
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "http://localhost/cs490/back/check_taken.php");
+  curl_setopt($ch, CURLOPT_URL, "http://afsaccess2.njit.edu/~mw288/cs490/back/check_taken.php");
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, "id=$id");
 

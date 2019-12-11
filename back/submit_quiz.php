@@ -1,6 +1,6 @@
 <?php
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'mw288');
+$db = mysqli_connect('sql.njit.edu', 'mw288', '1k9L0X2z', 'mw288');
 // check if login_user is posted
   $id = $_POST['id'];
   $quiznum = $_POST['quiznum'];
@@ -9,7 +9,7 @@ $db = mysqli_connect('localhost', 'root', '', 'mw288');
 
   $sql = "UPDATE Available SET Taken='1' WHERE Student_ID='$id' AND Quiz_Num='$quiznum'";
   	$resultsql = mysqli_query($db, $sql);
-  	$query = "INSERT INTO studentanswers (Student_ID,Quiz_ID,Question_ID,Answers) VALUES ('$id','$quiznum','$question_id','$answer')";
+  	$query = "INSERT INTO Studentanswers (Student_ID,Quiz_ID,Question_ID,Answers) VALUES ('$id','$quiznum','$question_id','$answer')";
   	$results = mysqli_query($db, $query);
   	if ($results) {
   	  echo("successly submitted question");

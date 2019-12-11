@@ -25,6 +25,9 @@
     font-family: cursive;
     margin-top: 20px;
 	width:100%;
+	background-color: white;
+    font-weight: bold;
+    padding: 10px;
 }
 .full-page-div{
 	width:100%;
@@ -59,6 +62,10 @@ text-align:center;
 	padding: 14px;
     border-top: groove;
 	
+}
+.q-item{
+	display:inline-flex;
+	width:100%;
 }
 /* Teacher Tab */
 * {box-sizing: border-box}
@@ -177,6 +184,9 @@ td{
   background-color: white;
   color:black;	
 }
+td:hover{
+  background-color: gray;
+}
 #full-screen-loader{
 display:none;
 width:100%;
@@ -251,3 +261,4 @@ margin-top:19%;
   from {top: 30px; opacity: 1;}
   to {top: 0; opacity: 0;}
 }
+
